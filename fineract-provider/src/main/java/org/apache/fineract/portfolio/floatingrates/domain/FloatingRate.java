@@ -30,6 +30,8 @@ import org.apache.fineract.infrastructure.core.service.DateUtils;
 import org.apache.fineract.portfolio.floatingrates.data.FloatingRateDTO;
 import org.apache.fineract.portfolio.floatingrates.data.FloatingRatePeriodData;
 import org.apache.fineract.useradministration.domain.AppUser;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.joda.time.LocalDate;
 
 import com.google.gson.JsonArray;
@@ -51,6 +53,7 @@ public class FloatingRate extends AbstractPersistableCustom<Long> {
 
 	@OrderBy(value = "fromDate,id")
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "floatingRate", orphanRemoval = true, fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<FloatingRatePeriod> floatingRatePeriods;
 
 	@ManyToOne(optional = true, fetch=FetchType.LAZY)

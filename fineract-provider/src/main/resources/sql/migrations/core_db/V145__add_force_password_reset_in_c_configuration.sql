@@ -19,10 +19,10 @@
 
 INSERT INTO `c_configuration` (`id`, `name`, `value`, `enabled`) VALUES (NULL, 'force-password-reset-days', '0', '0');
 
-ALTER TABLE  `m_appuser` ADD  `last_time_password_updated` DATE NOT NULL ,
+ALTER TABLE  `m_appuser` ADD  `last_time_password_updated` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00',
 ADD INDEX (  `last_time_password_updated` ) ;
 
-UPDATE  `m_appuser` SET  `last_time_password_updated` =  NOW() WHERE  `m_appuser`.`last_time_password_updated` ='0000-00-00';
+UPDATE  `m_appuser` SET  `last_time_password_updated` =  NOW() WHERE  `m_appuser`.`last_time_password_updated` ='1000-01-01 00:00:00';
 
 CREATE TABLE IF NOT EXISTS `m_appuser_previous_password` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

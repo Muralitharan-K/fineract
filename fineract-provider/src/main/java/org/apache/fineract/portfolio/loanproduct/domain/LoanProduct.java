@@ -60,6 +60,8 @@ import org.apache.fineract.portfolio.floatingrates.domain.FloatingRate;
 import org.apache.fineract.portfolio.fund.domain.Fund;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.AprCalculator;
 import org.apache.fineract.portfolio.loanproduct.LoanProductConstants;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.joda.time.LocalDate;
 import org.apache.fineract.infrastructure.core.domain.AbstractPersistableCustom;
 
@@ -99,6 +101,7 @@ public class LoanProduct extends AbstractPersistableCustom<Long> {
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "m_product_loan_charge", joinColumns = @JoinColumn(name = "product_loan_id"), inverseJoinColumns = @JoinColumn(name = "charge_id"))
     private List<Charge> charges;
 

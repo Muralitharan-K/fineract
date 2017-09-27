@@ -32,9 +32,12 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		depends-on="tenantDatabaseUpgradeService">
 		<property name="dataSource" ref="routingDataSource" />
-		<property name="persistenceUnitName" value="jpa-pu" />
+		<!-- <property name="persistenceUnitName" value="jpa-pu" /> -->
 		<property name="jpaVendorAdapter">
-		   <bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter"/>
+		   <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		   			<property name="showSql" value="true" />
+                    <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+           </bean>
 		</property>
 	</bean>
 
