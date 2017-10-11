@@ -33,11 +33,13 @@
 		depends-on="tenantDatabaseUpgradeService">
 		<property name="dataSource" ref="routingDataSource" />
 		<!-- <property name="persistenceUnitName" value="jpa-pu" /> -->
+		<property name="packagesToScan" value="org.apache.fineract"/>
 		<property name="jpaVendorAdapter">
-		   <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		   			<property name="showSql" value="true" />
-                    <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-           </bean>
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="${spring.jpa.hibernate.show-sql}" />
+				<property name="databasePlatform" value="${spring.jpa.hibernate.dialect}" />
+				<property name="generateDdl" value="false"/>
+			</bean>
 		</property>
 	</bean>
 
