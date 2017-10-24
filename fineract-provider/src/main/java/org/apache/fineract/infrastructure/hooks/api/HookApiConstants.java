@@ -36,6 +36,16 @@ public class HookApiConstants {
 
     public static final String smsTemplateName = "SMS Bridge";
 
+    public static final String queueTemplateName = "Queue";
+
+    public static final String queueName = "Queue Name";
+
+    public static final String queueURLName = "Queue Broker URL";
+
+    public static final String queueUserName = "Username";
+
+    public static final String queuePassword = "Password";
+
     public static final String payloadURLName = "Payload URL";
 
     public static final String contentTypeName = "Content Type";

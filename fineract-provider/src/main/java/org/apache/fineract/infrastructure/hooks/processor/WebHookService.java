@@ -40,6 +40,7 @@ public interface WebHookService {
 	final static String TENANT_HEADER = "Fineract-Platform-TenantId";
 	final static String ENDPOINT_HEADER = "X-Fineract-Endpoint";
 	final static String API_KEY_HEADER = "X-Fineract-API-Key";
+	final static String QUEUENAME_HEADER = "X-Fineract-QueueName";
 
 	// Ping
 	@GET("/")
@@ -71,5 +72,14 @@ public interface WebHookService {
 
 	@POST("/configuration")
 	String sendSmsBridgeConfigRequest(@Body SmsProviderData config);
+
+	// Template - Queue
+    @POST("/")
+    void sendQueueRequest(@Header(ENTITY_HEADER) String entityHeader,
+            @Header(ACTION_HEADER) String actionHeader,
+            @Header(TENANT_HEADER) String tenantHeader,
+            @Header(ENDPOINT_HEADER) String endpointHeader,
+            @Header(QUEUENAME_HEADER) String queueNameHeader,
+            @Body String result, Callback<Response> callBack);
 
 }

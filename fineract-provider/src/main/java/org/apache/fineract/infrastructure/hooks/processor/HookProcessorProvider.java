@@ -20,6 +20,7 @@ package org.apache.fineract.infrastructure.hooks.processor;
 
 import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.smsTemplateName;
 import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.webTemplateName;
+import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.queueTemplateName;
 
 import org.apache.fineract.infrastructure.hooks.domain.Hook;
 import org.springframework.beans.BeansException;
@@ -47,6 +48,9 @@ public class HookProcessorProvider implements ApplicationContextAware {
 		} else if (templateName.equals(webTemplateName)) {
 			processor = this.applicationContext.getBean("webHookProcessor",
 					WebHookProcessor.class);
+		} else if (templateName.equals(queueTemplateName)) {
+          processor = this.applicationContext.getBean("queueHookProcessor",
+              QueueHookProcessor.class);
 		} else {
 			processor = null;
 		}
