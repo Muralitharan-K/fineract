@@ -49,7 +49,6 @@ begin
 
 	declare cursor1 cursor for
       select sa.currency_code, sa.withdrawal_fee_type_enum, sa.withdrawal_fee_amount
-      from m_savings_account sa where sa.withdrawal_fee_amount is not null and sa.withdrawal_fee_amount > 0 group by sa.currency_code, sa.withdrawal_fee_type_enum,sa.withdrawal_fee_amount;
 
 	declare cursor2 cursor for
       select sa.id, sa.withdrawal_fee_amount from m_savings_account sa where sa.currency_code=v_currency_code and sa.withdrawal_fee_type_enum=v_withdrawal_fee_type_enum and sa.withdrawal_fee_amount is not null and sa.withdrawal_fee_amount > 0;

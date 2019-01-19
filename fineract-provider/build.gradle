@@ -72,6 +72,82 @@ repositories {
 	mavenCentral() // useful for local dev using MariaDB4j SNAPSHOTs (not needed for real-world non-SNAPHOT builds)
 }
 
+rat {
+  xmlOutput = false
+  htmlOutput = false
+  plainOutput = true
+  verbose = false 
+//  inputDir = './..'
+  reportDir = new File(buildDir,'reports/rat')
+ excludes = [
+	'**/licenses/**',
+	'**/*.md',
+	'**/MANIFEST.MF',
+	'**/*.txt',
+	'**/*.log',
+	'**/fineractdev-eclipse-preferences.epf',
+	'**/template-expected.html',
+	'**/template.mustache',
+	'**/.classpath',
+	'**/.project',
+	'**/.idea/**',
+	'**/.settings/**',
+	'**/bin/**',
+	'**/.git/**',
+    '**/.gitignore',
+    '**/.gitkeep',
+	'**/*.iml',
+	//Notice files
+	'**/NOTICE_RELEASE',
+	'**/NOTICE_SOURCE',
+    // Swagger License
+    '**/fineract-provider/src/main/resources/swagger-ui/*.*',
+    // gradle
+    '**/.gradle/**',
+    '**/gradlew',
+    '**/gradlew.bat',
+    '**/gradle/wrapper/gradle-wrapper.properties',
+    '**/caches/**',
+    '**/daemon/**',
+    '**/native/**',
+    '**/wrapper/**',
+	'**/build/**',
+	
+	//Api Docs 
+	'**/api-docs/*.*',
+	'**/docs/system-architecture/.htaccess',
+	'**/docs/system-architecture/404.html',
+	'**/docs/system-architecture/index.html',
+	'**/docs/system-architecture/**/*.xml',
+	'**/bootstrap-3.0.0/assets/application.js',
+	'**/system-architecture/js/plugins.js',
+	
+	//Apache License
+	'**/bootstrap-3.0.0/assets/less.js',
+	'**/css/bootstrap-3.0.0/**/*.*',
+	
+	//Public Domain See http://www.JSON.org/js.html
+	'**/bootstrap-3.0.0/assets/json2.js.htm',
+	
+	// MIT License
+	'**/modernizr-2.6.2.min.js',
+	'**/css/normalize.css',
+	'**/assets/filesaver.js',
+	'**/css/fonts/glyphicons-halflings-regular.svg',
+	'**/assets/jszip.js',
+	'**/assets/jquery.js',
+	'**/api-docs/jquery-1.7.min.js',
+	'**/css/toc-0.1.2/**/*.*',
+	'**/docs/system-architecture/css/main.css',
+	'**/system-architecture/js/vendor/jquery-1.9.1.min.js',
+	'**/system-architecture/js/vendor/toc-0.1.2/jquery.toc.min.js',
+	'**/assets/respond.min.js',
+	'**/assets/html5shiv.js',
+	
+	//BSD License
+	'**/assets/uglify.js'
+	]
+}
 configurations {
 	providedRuntime // needed for Spring Boot executable WAR
     providedCompile
@@ -108,17 +184,33 @@ if (project.hasProperty('env') && project.getProperty('env') == 'dev') {
 
 /* Enable Oauth2 authentication based on environment, default to HTTP basic auth */
 if (project.hasProperty('security') && project.getProperty('security') == 'oauth') {
-	copy {
-	    from './properties/oauth/'
-	    into 'src/main/resources/'
-	    include '*.properties'
-	}
+    if(project.hasProperty('twofactor') && project.getProperty('twofactor') == 'enabled') {
+        copy {
+            from './properties/oauth/twofactor/'
+            into 'src/main/resources/'
+            include '*.properties'
+        }
+    } else {
+        copy {
+            from './properties/oauth/'
+            into 'src/main/resources/'
+            include '*.properties'
+        }
+    }
 }  else {
-	copy {
-	    from './properties/basicauth/'
-	    into 'src/main/resources/'
-	    include '*.properties'
-	}
+    if(project.hasProperty('twofactor') && project.getProperty('twofactor') == 'enabled') {
+        copy {
+            from './properties/basicauth/twofactor/'
+            into 'src/main/resources/'
+            include '*.properties'
+        }
+    } else {
+        copy {
+            from './properties/basicauth/'
+            into 'src/main/resources/'
+            include '*.properties'
+        }
+    }
 }
 
 springBoot {
